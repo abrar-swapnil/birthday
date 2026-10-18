@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday, Suchi!</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#2b1140; --bg2:#5b1f5e; --rose:#ff7eb6; --butter:#ffe29a; --mint:#7ee7c7; --cream:#fff1f5; --ink:#fff8fb;
+  color-scheme: dark;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{
+  font-family:'Fredoka',system-ui,sans-serif; color:var(--ink); text-align:center;
+  background:radial-gradient(ellipse at 50% 85%,var(--bg2) 0%,var(--bg1) 65%) fixed #2b1140;
+  overflow-x:hidden; min-height:100vh;
+}
+main{max-width:640px;margin:0 auto;padding:28px 20px 40px;position:relative;z-index:2}
+h1{margin:0;font-weight:500;font-size:clamp(1.2rem,4vw,1.6rem);color:var(--butter);letter-spacing:.02em}
+.name{
+  font-family:'Pacifico','Brush Script MT',cursive; font-weight:400; margin:.1em 0 0;
+  font-size:clamp(4.2rem,22vw,8rem); line-height:1.1;
+  background:linear-gradient(100deg,var(--rose),var(--butter),var(--mint),var(--rose));
+  background-size:300% 100%; -webkit-background-clip:text; background-clip:text; color:transparent;
+  animation:shine 6s linear infinite;
+  filter:drop-shadow(0 6px 22px rgba(255,126,182,.45));
+}
+@keyframes shine{to{background-position:-300% 0}}
+.cake-wrap{position:relative;margin:6px auto 0;width:min(86vw,380px)}
+.cake-wrap svg{width:100%;height:auto;display:block;overflow:visible}
+.flame{transform-origin:50% 100%;transform-box:fill-box;animation:flick .18s ease-in-out infinite alternate;transition:opacity .35s,transform .35s}
+.flame:nth-child(2){animation-duration:.22s}
+.flame:nth-child(3){animation-duration:.26s}
+@keyframes flick{from{transform:scale(1,1) rotate(-3deg)}to{transform:scale(.9,1.08) rotate(3deg)}}
+.out .flame{opacity:0;transform:scale(.2);animation:none}
+.glow{transition:opacity .5s}
+.out .glow{opacity:0}
+.smoke{opacity:0}
+.out .smoke{animation:smoke 2s ease-out forwards}
+@keyframes smoke{0%{opacity:.7;transform:translateY(0)}100%{opacity:0;transform:translateY(-40px)}}
+.msg{min-height:3.6em;margin:18px 0 12px;font-size:1.15rem;line-height:1.5;color:var(--cream)}
+button{
+  font:inherit;font-weight:600;font-size:1.05rem;cursor:pointer;border:0;border-radius:999px;
+  padding:14px 30px;color:#3a1246;background:var(--butter);
+  box-shadow:0 6px 0 #d9a95a,0 12px 24px rgba(0,0,0,.3);transition:transform .1s,box-shadow .1s;
+}
+button:active{transform:translateY(4px);box-shadow:0 2px 0 #d9a95a}
+button:focus-visible{outline:3px solid var(--mint);outline-offset:4px}
+.balloons{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.b{position:absolute;bottom:-120px;width:46px;height:58px;border-radius:50% 50% 48% 48%;opacity:.85;animation:rise linear infinite}
+.b::after{content:"";position:absolute;left:50%;top:100%;width:1.5px;height:50px;background:rgba(255,255,255,.4)}
+@keyframes rise{to{transform:translateY(-120vh) translateX(var(--dx))}}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:3}
+@media (prefers-reduced-motion:reduce){.name,.flame,.b{animation:none}}
+</style>
+</head>
+<body>
+<div class="balloons" id="balloons" aria-hidden="true"></div>
+<canvas id="c"></canvas>
+<main>
+  <h1>Happy Birthday</h1>
+  <div class="name">Suchi</div>
+
+  <div class="cake-wrap" id="cake">
+    <svg viewBox="0 0 320 300" role="img" aria-label="Birthday cake with three candles">
+      <defs>
+        <radialGradient id="g" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ffe29a" stop-opacity=".55"/><stop offset="1" stop-color="#ffe29a" stop-opacity="0"/></radialGradient>
+        <linearGradient id="fl" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff8a3d"/><stop offset="1" stop-color="#ffe86b"/></linearGradient>
+      </defs>
+      <g class="glow"><circle cx="160" cy="62" r="95" fill="url(#g)"/></g>
+      <!-- plate -->
+      <ellipse cx="160" cy="278" rx="150" ry="16" fill="#fff1f5" opacity=".9"/>
+      <!-- bottom tier -->
+      <rect x="30" y="198" width="260" height="76" rx="14" fill="#ff7eb6"/>
+      <path d="M30 212 q16 22 32 0 q16 22 32 0 q16 22 32 0 q16 22 32 0 q16 22 32 0 q16 22 32 0 q16 22 32 0 q16 22 32 0 v-14 h-260z" fill="#fff1f5"/>
+      <circle cx="70" cy="248" r="5" fill="#ffe29a"/><circle cx="125" cy="256" r="5" fill="#7ee7c7"/><circle cx="195" cy="248" r="5" fill="#ffe29a"/><circle cx="250" cy="256" r="5" fill="#7ee7c7"/>
+      <!-- top tier -->
+      <rect x="75" y="130" width="170" height="72" rx="14" fill="#b57bff"/>
+      <path d="M75 144 q14 20 28 0 q14 20 28 0 q14 20 28 0 q14 20 28 0 q14 20 28 0 q14 20 28 0 v-14 h-168z" fill="#fff1f5"/>
+      <circle cx="110" cy="178" r="5" fill="#ffe29a"/><circle cx="160" cy="186" r="5" fill="#7ee7c7"/><circle cx="210" cy="178" r="5" fill="#ffe29a"/>
+      <!-- candles -->
+      <g>
+        <rect x="108" y="92" width="12" height="42" rx="3" fill="#7ee7c7"/>
+        <rect x="154" y="86" width="12" height="48" rx="3" fill="#ffe29a"/>
+        <rect x="200" y="92" width="12" height="42" rx="3" fill="#ff9ec9"/>
+        <path d="M108 104 l12 6 M108 116 l12 6" stroke="#fff" stroke-opacity=".6" stroke-width="3"/>
+        <path d="M154 98 l12 6 M154 110 l12 6" stroke="#fff" stroke-opacity=".6" stroke-width="3"/>
+        <path d="M200 104 l12 6 M200 116 l12 6" stroke="#fff" stroke-opacity=".6" stroke-width="3"/>
+      </g>
+      <g>
+        <path class="flame" d="M114 90 c-9-10 -4-20 0-28 c4 8 9 18 0 28z" fill="url(#fl)"/>
+        <path class="flame" d="M160 84 c-9-10 -4-20 0-28 c4 8 9 18 0 28z" fill="url(#fl)"/>
+        <path class="flame" d="M206 90 c-9-10 -4-20 0-28 c4 8 9 18 0 28z" fill="url(#fl)"/>
+      </g>
+      <g class="smoke" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity="0">
+        <path d="M114 86 q-6-12 0-22 q6-10 0-20"/><path d="M160 80 q-6-12 0-22 q6-10 0-20"/><path d="M206 86 q-6-12 0-22 q6-10 0-20"/>
+      </g>
+    </svg>
+  </div>
+
+  <p class="msg" id="msg">Make a wish, Suchi, then blow out the candles.</p>
+  <button id="btn">Blow out the candles</button>
+</main>
+
+<script>
+(function(){
+  var cake=document.getElementById('cake'), msg=document.getElementById('msg'), btn=document.getElementById('btn');
+  var cv=document.getElementById('c'), ctx=cv.getContext('2d'), parts=[], out=false, raf=null;
+  function size(){cv.width=innerWidth;cv.height=innerHeight}
+  size(); addEventListener('resize',size);
+
+  // balloons
+  var cols=['#ff7eb6','#ffe29a','#7ee7c7','#b57bff','#ff9a6b'], bl=document.getElementById('balloons');
+  for(var i=0;i<10;i++){
+    var b=document.createElement('div'); b.className='b';
+    b.style.left=(Math.random()*94)+'%'; b.style.background=cols[i%cols.length];
+    b.style.animationDuration=(12+Math.random()*10)+'s'; b.style.animationDelay=(-Math.random()*18)+'s';
+    b.style.setProperty('--dx',((Math.random()-.5)*80)+'px'); bl.appendChild(b);
+  }
+
+  function burst(){
+    for(var i=0;i<160;i++){
+      parts.push({x:innerWidth/2,y:innerHeight*.4,vx:(Math.random()-.5)*14,vy:-Math.random()*13-3,
+        s:Math.random()*7+4,r:Math.random()*6,vr:(Math.random()-.5)*.4,c:cols[i%cols.length],life:140+Math.random()*60});
+    }
+    if(!raf) loop();
+  }
+  function loop(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    parts=parts.filter(function(p){return p.life>0&&p.y<innerHeight+20});
+    parts.forEach(function(p){
+      p.vy+=.28;p.x+=p.vx;p.y+=p.vy;p.vx*=.99;p.r+=p.vr;p.life--;
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.fillStyle=p.c;ctx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);ctx.restore();
+    });
+    raf=parts.length?requestAnimationFrame(loop):null;
+  }
+
+  function toggle(){
+    out=!out;
+    cake.classList.toggle('out',out);
+    if(out){
+      msg.textContent='Your wish is on its way. Happy Birthday, Suchi! Wishing you a year full of joy, laughter and cake.';
+      btn.textContent='Light them again';
+      var rm=matchMedia('(prefers-reduced-motion: reduce)').matches; if(!rm) burst();
+    } else {
+      msg.textContent='Make a wish, Suchi, then blow out the candles.';
+      btn.textContent='Blow out the candles';
+    }
+  }
+  btn.addEventListener('click',toggle);
+  cake.addEventListener('click',function(){ if(!out) toggle(); });
+})();
+</script>
+</body>
+</html>
