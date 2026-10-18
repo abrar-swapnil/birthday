@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg1:#2b1140; --bg2:#5b1f5e; --rose:#ff7eb6; --butter:#ffe29a; --mint:#7ee7c7; --cream:#fff1f5; --ink:#fff8fb;
+  --bg1:#180b35; --bg2:#63205f; --rose:#ff7eb6; --butter:#ffe29a; --mint:#7ee7c7; --cream:#fff1f5; --ink:#fff8fb;
   color-scheme: dark;
   box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
@@ -15,11 +15,18 @@
 html,body{margin:0;min-height:100%}
 body{
   font-family:'Fredoka',system-ui,sans-serif; color:var(--ink); text-align:center;
-  background:radial-gradient(ellipse at 50% 85%,var(--bg2) 0%,var(--bg1) 65%) fixed #2b1140;
+  background:
+    radial-gradient(circle at 15% 12%,rgba(255,126,182,.2) 0 2px,transparent 3px),
+    radial-gradient(circle at 83% 22%,rgba(255,226,154,.28) 0 2px,transparent 3px),
+    radial-gradient(circle at 72% 76%,rgba(126,231,199,.18) 0 2px,transparent 3px),
+    radial-gradient(ellipse at 50% 85%,var(--bg2) 0%,var(--bg1) 65%) fixed #180b35;
+  background-size:190px 190px,240px 240px,280px 280px,auto;
   overflow-x:hidden; min-height:100vh;
 }
-main{max-width:640px;margin:0 auto;padding:28px 20px 40px;position:relative;z-index:2}
-h1{margin:0;font-weight:500;font-size:clamp(1.2rem,4vw,1.6rem);color:var(--butter);letter-spacing:.02em}
+main{max-width:680px;margin:0 auto;padding:28px 20px 42px;position:relative;z-index:2}
+.card{padding:28px 18px 24px;border:1px solid rgba(255,255,255,.2);border-radius:32px;background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.04));box-shadow:0 24px 70px rgba(10,2,31,.35),inset 0 1px rgba(255,255,255,.18);backdrop-filter:blur(8px)}
+h1{margin:0;font-weight:500;font-size:clamp(1.2rem,4vw,1.6rem);color:var(--butter);letter-spacing:.08em;text-transform:uppercase}
+.eyebrow{margin:8px 0 0;color:rgba(255,241,245,.78);font-size:.9rem;letter-spacing:.16em;text-transform:uppercase}
 .name{
   font-family:'Pacifico','Brush Script MT',cursive; font-weight:400; margin:.1em 0 0;
   font-size:clamp(4.2rem,22vw,8rem); line-height:1.1;
@@ -42,6 +49,8 @@ h1{margin:0;font-weight:500;font-size:clamp(1.2rem,4vw,1.6rem);color:var(--butte
 .out .smoke{animation:smoke 2s ease-out forwards}
 @keyframes smoke{0%{opacity:.7;transform:translateY(0)}100%{opacity:0;transform:translateY(-40px)}}
 .msg{min-height:3.6em;margin:18px 0 12px;font-size:1.15rem;line-height:1.5;color:var(--cream)}
+.promise{margin:26px auto 0;padding:18px 14px 4px;max-width:480px;border-top:1px solid rgba(255,255,255,.2);font-family:'Pacifico','Brush Script MT',cursive;font-size:clamp(1.2rem,4vw,1.55rem);line-height:1.45;color:var(--butter);text-shadow:0 3px 16px rgba(255,126,182,.35)}
+.promise span{display:block;margin-top:6px;font-family:'Fredoka',system-ui,sans-serif;font-size:.78rem;letter-spacing:.12em;color:rgba(255,241,245,.7);text-transform:uppercase}
 button{
   font:inherit;font-weight:600;font-size:1.05rem;cursor:pointer;border:0;border-radius:999px;
   padding:14px 30px;color:#3a1246;background:var(--butter);
@@ -61,7 +70,9 @@ canvas{position:fixed;inset:0;pointer-events:none;z-index:3}
 <div class="balloons" id="balloons" aria-hidden="true"></div>
 <canvas id="c"></canvas>
 <main>
+ <section class="card">
   <h1>Happy Birthday</h1>
+  <p class="eyebrow">A little surprise, made with love</p>
   <div class="name">Suchi</div>
 
   <div class="cake-wrap" id="cake">
@@ -103,6 +114,8 @@ canvas{position:fixed;inset:0;pointer-events:none;z-index:3}
 
   <p class="msg" id="msg">Make a wish, Suchi, then blow out the candles.</p>
   <button id="btn">Blow out the candles</button>
+  <p class="promise">I want to see you always happy<span>today, tomorrow, and every day</span></p>
+ </section>
 </main>
 
 <script>
