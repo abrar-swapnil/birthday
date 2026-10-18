@@ -61,9 +61,14 @@ button:focus-visible{outline:3px solid var(--mint);outline-offset:4px}
 .balloons{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
 .b{position:absolute;bottom:-120px;width:46px;height:58px;border-radius:50% 50% 48% 48%;opacity:.85;animation:rise linear infinite}
 .b::after{content:"";position:absolute;left:50%;top:100%;width:1.5px;height:50px;background:rgba(255,255,255,.4)}
+.love{width:30px;height:30px;border-radius:4px 4px 7px;background:var(--rose);transform:rotate(-45deg);box-shadow:0 0 18px rgba(255,126,182,.5);animation:heartRise linear infinite}
+.love::before,.love::after{content:"";position:absolute;width:30px;height:30px;border-radius:50%;background:inherit}
+.love::before{top:-15px;left:0}.love::after{top:0;left:15px}
+.love .string{position:absolute;z-index:-1;top:27px;left:20px;width:1.5px;height:70px;background:rgba(255,255,255,.35);transform:rotate(45deg)}
 @keyframes rise{to{transform:translateY(-120vh) translateX(var(--dx))}}
+@keyframes heartRise{to{transform:translateY(-120vh) translateX(var(--dx)) rotate(-45deg)}}
 canvas{position:fixed;inset:0;pointer-events:none;z-index:3}
-@media (prefers-reduced-motion:reduce){.name,.flame,.b{animation:none}}
+@media (prefers-reduced-motion:reduce){.name,.flame,.b,.love{animation:none}}
 </style>
 </head>
 <body>
@@ -133,11 +138,26 @@ canvas{position:fixed;inset:0;pointer-events:none;z-index:3}
     b.style.animationDuration=(12+Math.random()*10)+'s'; b.style.animationDelay=(-Math.random()*18)+'s';
     b.style.setProperty('--dx',((Math.random()-.5)*80)+'px'); bl.appendChild(b);
   }
+  for(var h=0;h<7;h++){
+    var heart=document.createElement('div'); heart.className='b love';
+    heart.style.left=(5+Math.random()*88)+'%'; heart.style.background=cols[h%cols.length];
+    heart.style.animationDuration=(15+Math.random()*9)+'s'; heart.style.animationDelay=(-Math.random()*20)+'s';
+    heart.style.setProperty('--dx',((Math.random()-.5)*120)+'px');
+    var string=document.createElement('span'); string.className='string'; heart.appendChild(string); bl.appendChild(heart);
+  }
 
   function burst(){
-    for(var i=0;i<160;i++){
-      parts.push({x:innerWidth/2,y:innerHeight*.4,vx:(Math.random()-.5)*14,vy:-Math.random()*13-3,
-        s:Math.random()*7+4,r:Math.random()*6,vr:(Math.random()-.5)*.4,c:cols[i%cols.length],life:140+Math.random()*60});
+    for(var b=0;b<4;b++){
+      var x=innerWidth*(.18+Math.random()*.64), y=innerHeight*(.16+Math.random()*.35);
+      for(var i=0;i<42;i++){
+        var angle=(Math.PI*2*i)/42, speed=2.5+Math.random()*4;
+        parts.push({kind:'firework',x:x,y:y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,
+          s:Math.random()*2+1, c:cols[(b+i)%cols.length],life:55+Math.random()*35,max:90});
+      }
+    }
+    for(var j=0;j<120;j++){
+      parts.push({kind:'confetti',x:innerWidth/2,y:innerHeight*.4,vx:(Math.random()-.5)*14,vy:-Math.random()*13-3,
+        s:Math.random()*7+4,r:Math.random()*6,vr:(Math.random()-.5)*.4,c:cols[j%cols.length],life:140+Math.random()*60});
     }
     if(!raf) loop();
   }
@@ -145,8 +165,15 @@ canvas{position:fixed;inset:0;pointer-events:none;z-index:3}
     ctx.clearRect(0,0,cv.width,cv.height);
     parts=parts.filter(function(p){return p.life>0&&p.y<innerHeight+20});
     parts.forEach(function(p){
-      p.vy+=.28;p.x+=p.vx;p.y+=p.vy;p.vx*=.99;p.r+=p.vr;p.life--;
-      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.fillStyle=p.c;ctx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);ctx.restore();
+      p.life--; p.x+=p.vx; p.y+=p.vy;
+      if(p.kind==='firework'){
+        p.vx*=.97;p.vy*=.97;p.vy+=.035;
+        ctx.globalAlpha=Math.max(0,p.life/p.max);ctx.fillStyle=p.c;
+        ctx.beginPath();ctx.arc(p.x,p.y,p.s,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
+      } else {
+        p.vy+=.28;p.vx*=.99;p.r+=p.vr;
+        ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.fillStyle=p.c;ctx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);ctx.restore();
+      }
     });
     raf=parts.length?requestAnimationFrame(loop):null;
   }
